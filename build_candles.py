@@ -34,7 +34,7 @@ for directory in data_folders:
 
 		# add district if not exists
 		if district_name not in districts.keys():
-			districts[district_name] = [DistrictPricesByRoom(1), DistrictPricesByRoom(3), DistrictPricesByRoom(2)]
+			districts[district_name] = [DistrictPricesByRoom(1), DistrictPricesByRoom(2), DistrictPricesByRoom(3)]
 
 		cur_district = districts[district_name]
 
