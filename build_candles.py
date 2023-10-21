@@ -20,7 +20,7 @@ class DistrictPricesByRoom:
 		self.rel_prices.append([])
 
 
-data_folders = ["april_2023", "september_2023"]
+data_folders = ["april_2023", "september_2023", "october_2023"]
 # dict: District --> array of DistrictPricesAtMoment
 # district_history = {}
 
