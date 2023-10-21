@@ -19,6 +19,31 @@ class DistrictPricesByRoom:
 		self.abs_prices.append([])
 		self.rel_prices.append([])
 
+def save_plot(districts, data_folders, is_abs = True):
+	for dname, ddata in districts.items():
+		for rooms in ddata:
+			plt.style.use('_mpl-gallery')
+			file_name = str(rooms.room_count) + "/" + dname
+
+			if is_abs is True:
+				file_name = file_name + "_abs.png"
+			else:
+				file_name = file_name + "_rel.png"
+
+			fig, ax = plt.subplots(figsize=(10, 10), facecolor='lightskyblue', layout='constrained')
+			fig.suptitle('Rent cost by months in {0}'.format(dname))
+
+			if is_abs is True:
+				VP = ax.boxplot(rooms.abs_prices, labels=data_folders)
+			else:
+				VP = ax.boxplot(rooms.rel_prices, labels=data_folders)
+
+			if not os.path.exists(str(rooms.room_count)):
+				os.makedirs(str(rooms.room_count))
+
+			plt.savefig(file_name)
+			plt.close()
+
 
 data_folders = ["april_2023", "september_2023", "october_2023"]
 # dict: District --> array of DistrictPricesAtMoment
@@ -52,19 +77,6 @@ for directory in data_folders:
 
 				cur_district[room_cnt-1].add(int(row[2]), int(row[3]))
 
-nm = "Nor_Nork"
 
-print(districts[nm][2].abs_prices)
-
-# plot
-plt.style.use('_mpl-gallery')
-fig, ax = plt.subplots()
-VP = ax.boxplot(districts[nm][2].abs_prices)
-
-# ax.set(xlim=(0, 8), xticks=np.arange(1, 8), ylim=(0, 8), yticks=np.arange(1, 8))
-plt.ylim([0, 1000000])
-plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
-plt.show()
-
-
-# print(district_history["Malatia_Sebastia"])
+save_plot(districts, data_folders, True)
+save_plot(districts, data_folders, False)
