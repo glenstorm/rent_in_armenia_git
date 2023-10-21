@@ -26,9 +26,9 @@ def save_plot(districts, data_folders, is_abs = True):
 			file_name = str(rooms.room_count) + "/" + dname
 
 			if is_abs is True:
-				file_name = file_name + "_abs.png"
+				file_name = file_name + "_abs.svg"
 			else:
-				file_name = file_name + "_rel.png"
+				file_name = file_name + "_rel.svg"
 
 			fig, ax = plt.subplots(figsize=(10, 10), facecolor='lightskyblue', layout='constrained')
 			fig.suptitle('Rent cost by months in {0}'.format(dname))
