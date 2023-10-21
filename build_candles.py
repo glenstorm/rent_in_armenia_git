@@ -52,17 +52,18 @@ for directory in data_folders:
 
 				cur_district[room_cnt-1].add(int(row[2]), int(row[3]))
 
-nm = "Arabkir"
+nm = "Nor_Nork"
 
-print(districts[nm][0].rel_prices)
-# for districts in district_history:
-plt.style.use('_mpl-gallery')
+print(districts[nm][2].abs_prices)
+
 # plot
+plt.style.use('_mpl-gallery')
 fig, ax = plt.subplots()
-VP = ax.boxplot(districts[nm][0].rel_prices)
+VP = ax.boxplot(districts[nm][2].abs_prices)
 
 # ax.set(xlim=(0, 8), xticks=np.arange(1, 8), ylim=(0, 8), yticks=np.arange(1, 8))
-
+plt.ylim([0, 1000000])
+plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
 plt.show()
 
 
