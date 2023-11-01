@@ -23,12 +23,12 @@ def save_plot(districts, data_folders, is_abs = True):
 	for dname, ddata in districts.items():
 		for rooms in ddata:
 			plt.style.use('_mpl-gallery')
-			file_name = str(rooms.room_count) + "/" + dname
+			file_name = str(rooms.room_count) + "/"
 
 			if is_abs is True:
-				file_name = file_name + "_abs.svg"
+				file_name += "abs/" + dname + ".svg"
 			else:
-				file_name = file_name + "_rel.svg"
+				file_name += "rel/" + dname + ".svg"
 
 			fig, ax = plt.subplots(figsize=(10, 10), facecolor='lightskyblue', layout='constrained')
 			fig.suptitle('Rent cost by months in {0}'.format(dname))
@@ -38,14 +38,20 @@ def save_plot(districts, data_folders, is_abs = True):
 			else:
 				VP = ax.boxplot(rooms.rel_prices, labels=data_folders)
 
-			if not os.path.exists(str(rooms.room_count)):
-				os.makedirs(str(rooms.room_count))
+			# if not os.path.exists(str(rooms.room_count)):
+			# 	os.makedirs(str(rooms.room_count))
+
+			if not os.path.exists(str(rooms.room_count) + "/abs"):
+				os.makedirs(str(rooms.room_count) + "/abs")
+
+			if not os.path.exists(str(rooms.room_count) + "/rel"):
+				os.makedirs(str(rooms.room_count) + "/rel")
 
 			plt.savefig(file_name)
 			plt.close()
 
 
-data_folders = ["april_2023", "september_2023", "october_2023"]
+data_folders = ["april_2023", "september_2023", "october_2023", "november_2023"]
 # dict: District --> array of DistrictPricesAtMoment
 # district_history = {}
 
