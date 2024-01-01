@@ -15,7 +15,7 @@ do
 			cd $i/web
 
 			j=1
-			while [ $j -ne 21 ]
+			while [ $j -ne 40 ]
 			do
 				fullpath=`echo $url | sed 's/\?/\/'$j'\?/g'`
 				echo $i$j
@@ -23,6 +23,7 @@ do
 				curl $fullpath > $i$j.html
 				if [ ! -s "$i$j.html" ]; then
 					rm $i$j.html
+					break
 				fi
 
 				j=$(($j+1))

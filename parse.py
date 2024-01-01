@@ -41,10 +41,10 @@ for dirName, subdirList, fileList in os.walk(rootDir):
 
 					if price[0] == '$':
 						price = price[1:]
-						intprice = int(price) * 388
+						intprice = int(price) * 404
 					elif price[0] == '€':
 						price = price[1:]
-						intprice = int(price) * 428
+						intprice = int(price) * 445
 					else:
 						intprice = int(price)
 

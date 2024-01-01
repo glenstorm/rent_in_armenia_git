@@ -2,6 +2,7 @@ import os
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
+from concurrent.futures import ProcessPoolExecutor
 
 class DistrictPricesByRoom:
 	def __init__(self, room_count):
@@ -38,9 +39,6 @@ def save_plot(districts, data_folders, is_abs = True):
 			else:
 				VP = ax.boxplot(rooms.rel_prices, labels=data_folders)
 
-			# if not os.path.exists(str(rooms.room_count)):
-			# 	os.makedirs(str(rooms.room_count))
-
 			if not os.path.exists(str(rooms.room_count) + "/abs"):
 				os.makedirs(str(rooms.room_count) + "/abs")
 
@@ -51,7 +49,7 @@ def save_plot(districts, data_folders, is_abs = True):
 			plt.close()
 
 
-data_folders = ["april_2023", "september_2023", "october_2023", "november_2023", "december_2023"]
+data_folders = ["april_2023", "september_2023", "october_2023", "november_2023", "december_2023", "january_2024"]
 # dict: District --> array of DistrictPricesAtMoment
 # district_history = {}
 
@@ -75,14 +73,27 @@ for directory in data_folders:
 		with open(csv_filename) as f:
 			reader = csv.reader(f, delimiter='\t')
 			lst = list(reader)
+			# print(f"lst = {lst}")
 
 			for row in lst:
-				room_cnt = int(row[1])
-				if room_cnt > 3:
-					room_cnt = 3
+				if row is None:
+					continue
 
-				cur_district[room_cnt-1].add(int(row[2]), int(row[3]))
+				if len(row) < 2:
+					print(f"row = {row}")
+
+				try:
+					room_cnt = int(row[1])
+					if room_cnt > 3:
+						room_cnt = 3
+
+					cur_district[room_cnt-1].add(int(row[2]), int(row[3]))
+				except Exception as e:
+					print(f"e = {e}, row = {row}")
 
 
-save_plot(districts, data_folders, True)
-save_plot(districts, data_folders, False)
+
+with ProcessPoolExecutor() as executor:
+	running_tasks = [executor.submit(save_plot, districts, data_folders, True), executor.submit(save_plot, districts, data_folders, False)]
+	for running_task in running_tasks:
+		running_task.result()
