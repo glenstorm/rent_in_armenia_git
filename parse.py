@@ -67,3 +67,8 @@ for dirName, subdirList, fileList in os.walk(rootDir):
 
 			out_file.close()
 			# exit()
+
+import shutil
+foldrs2delete = ["Achapnyack", "Avan", "Nork_Marash", "Nubarashen", "Zeitun_Kanaker", "Kentron", "Nor_Nork", "Arabkir", "Davidashen", "Erebuni", "Malatia_Sebastia", "Shengavit"]
+for fldr in foldrs2delete:
+	shutil.rmtree(fldr)
