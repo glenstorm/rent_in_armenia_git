@@ -15,12 +15,13 @@ do
 			cd $i/web
 
 			j=1
-			while [ $j -ne 40 ]
+			while [ $j -ne 20 ]
 			do
 				fullpath=`echo $url | sed 's/\?/\/'$j'\?/g'`
 				echo $i$j
 				# $url + $j
-				curl $fullpath > $i$j.html
+				curl $fullpath -compressed -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:129.0) Gecko/20100101 Firefox/129.0' -H 'Cookie: !!!Copy from browser!!!' > $i$j.html
+				sleep 1
 				if [ ! -s "$i$j.html" ]; then
 					rm $i$j.html
 					break
@@ -29,9 +30,15 @@ do
 				j=$(($j+1))
 			done
 			cd ../..
+			sleep 10
 		else
 			# url
 			url="$i"
 		fi
 	done
 done
+
+python3 parse.py
+cp -f csv/* august_2024/ # rename each time
+rm -rf csv
+python3 build_candles.py

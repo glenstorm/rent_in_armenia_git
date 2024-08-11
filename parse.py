@@ -19,17 +19,22 @@ for dirName, subdirList, fileList in os.walk(rootDir):
 			text_file.close()
 
 			tree = html.fromstring(data)
-			aparts = tree.xpath('//*[@id="contentr"]/div[@class="dl"]/div[@class="gl"]/a[*]')
+			aparts = tree.xpath('//*[@id="contentr"]/div[@class="dl"]/a[*]')
 
 			for z in aparts:
 				price = None
 				where = None
 				link = z.values()[0]
 				for divs in z:
-					if divs.attrib == {'class': 'p'}:
-						price = divs.text
-					if divs.attrib == {'class': 'at'}:
-						where = divs.text
+					if divs.tag == 'div':
+						for inner_div in divs:
+							# print(f"inner_div.attrib = {inner_div.attrib}")
+							if inner_div.attrib == {'class': 'ad-info-line-wrapper'}:
+								for pdivs in inner_div:
+									if pdivs.attrib == {'class':'p'}:
+										price = pdivs.text
+							if inner_div.attrib == {'class': 'at'}:
+								where = inner_div.text
 
 				if price is not None and where is not None:
 					# price part
@@ -68,7 +73,7 @@ for dirName, subdirList, fileList in os.walk(rootDir):
 			out_file.close()
 			# exit()
 
-import shutil
-foldrs2delete = ["Achapnyack", "Avan", "Nork_Marash", "Nubarashen", "Zeitun_Kanaker", "Kentron", "Nor_Nork", "Arabkir", "Davidashen", "Erebuni", "Malatia_Sebastia", "Shengavit"]
-for fldr in foldrs2delete:
-	shutil.rmtree(fldr)
+# import shutil
+# foldrs2delete = ["Achapnyack", "Avan", "Nork_Marash", "Nubarashen", "Zeitun_Kanaker", "Kentron", "Nor_Nork", "Arabkir", "Davidashen", "Erebuni", "Malatia_Sebastia", "Shengavit"]
+# for fldr in foldrs2delete:
+# 	shutil.rmtree(fldr)

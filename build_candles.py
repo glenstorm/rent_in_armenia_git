@@ -49,7 +49,7 @@ def save_plot(districts, data_folders, is_abs = True):
 			plt.close()
 
 
-data_folders = ["april_2023", "september_2023", "october_2023", "november_2023", "december_2023", "january_2024", "february_2024"]
+data_folders = ["april_2023", "september_2023", "october_2023", "november_2023", "december_2023", "january_2024", "february_2024", "august_2024"]
 # dict: District --> array of DistrictPricesAtMoment
 # district_history = {}
 
